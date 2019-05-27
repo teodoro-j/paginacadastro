@@ -78,7 +78,7 @@
 </head>
 
 <body>
-    <form>
+    <form onsubmit = 'return cadastrar ()' method = "POST" id='form_registro'>
         <div id='card'>
             <div id='front'>
                  <h2>LOGIN</h2>
@@ -94,7 +94,7 @@
                  usuário: <input type='text' id='user'></input><br>
                  e-mail: <input type='email' id='email'></input><br>
                  senha: <input type='password' id='senha_nova'></inout><br>
-                <button type='button' onclick='validar_cadastro()'>Cadastrar</button>
+                <button>Cadastrar</button>
             </div>
         </div>
     </form>
@@ -113,5 +113,26 @@
     }
     function fazer_cadastro () {
         card.style.transform= 'rotateY(180deg)';
+
+    }
+    function cadastrar () {
+        if (nome.value == '' || user.value == '' || email.value == '' || senha_nova == ''){
+            alert(`É necessário preencher os campos para fazer cadastrado`);
+        }
+        else {
+            var formulario = new URLSearcheParams(new FormData(form_registro));
+            console.log(formulario);
+            fetch('/users/registrar', {
+                metohd:"POST",
+                body:formulario
+            }).then((response)=>{
+                if(response.ok){
+                    setTimeout(function (){window.location = 'pagina_usuario.html'},2000);
+                }else{
+                    console.log('Erro no registro');
+                }
+            });
+            return false;
+        }
     }
 </script>
